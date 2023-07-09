@@ -177,7 +177,7 @@ async function main() {
     // Now you can call functions on the Registry contract
     // Creating ERC6551 Account from registry.
     /*const tx = await Registry.createAccount(
-        "0xA601bEF0d7f417AB74074Ef0E2fB205669243f50", // Address of the account created (ERC6551 Account contract)
+        "0xA601bEF0d7f417AB74074Ef0E2fB205669243f50", // Implementation address (ERC6551 Account contract)
         5, //  chainId
         "0xFc3287b7508a0783665fbCA5C8847628475c83e9", // parent NFT
         9, // token ID
@@ -187,7 +187,7 @@ async function main() {
 
     // Getting Account address
     const NewAccountAddress = await Registry.account(
-        "0xA601bEF0d7f417AB74074Ef0E2fB205669243f50", // Address of the account created (ERC6551 Account contract)
+        "0xA601bEF0d7f417AB74074Ef0E2fB205669243f50", // Implementation address (ERC6551 Account contract)
         5, //  chainId
         "0xFc3287b7508a0783665fbCA5C8847628475c83e9", // parent NFT
         9, // token ID
