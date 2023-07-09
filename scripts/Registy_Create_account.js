@@ -1,11 +1,11 @@
 const { ethers } = require("ethers");
 require("dotenv").config();
 
-// Replace these with your Infura project ID and private key
+// put your keys to the .env
 const infuraProjectId = process.env.INFURA_KEY;
 const privateKey = process.env.PRIVATE_KEY;
 
-// Replace this with the ABI of the ERC6551Registry contract
+//  ERC6551Registry ABI
 const ERC6551RegistryABI = [
     { inputs: [], name: "InitializationFailed", type: "error" },
     {
@@ -88,6 +88,7 @@ const ERC6551RegistryABI = [
     },
 ];
 
+//  ERC6551Account ABI
 const ERC6551AccountABI = [
     {
         inputs: [
@@ -158,6 +159,7 @@ const ERC6551AccountABI = [
     { stateMutability: "payable", type: "receive" },
 ];
 
+// Address of the Registry Contract you deployed.
 const RegistryAddress = "0x2018a38f1c8e486a99c0729e6cf8337f5401ceb9";
 
 async function main() {
@@ -194,6 +196,7 @@ async function main() {
 
     console.log("Account Created at:", NewAccountAddress);
 
+    // Send ETH to the account created.
     const recipientAddress = NewAccountAddress;
     const amountToSend = ethers.parseEther("0.02");
 
@@ -211,12 +214,14 @@ async function main() {
             console.error("Failed to send transaction:", error);
         });
 
+    // Get the Account to call it's functions
     const Account_contract = new ethers.Contract(
         NewAccountAddress,
         ERC6551AccountABI,
         wallet
     );
 
+    // Returns the owner of the account. owner is the holder of the Parent NFT
     const owner = await Account_contract.owner();
     console.log(owner);
 
@@ -224,10 +229,11 @@ async function main() {
     //const balance = await provider.getBalance(NewAccountAddress);
     //console.log("Balance of the Account: ", ethers.formatEther(balance));
 
+    // Execute call from the account created. Only Owner can call this function.
     const sendETHfromAccount = await Account_contract.executeCall(
-        "0xEC6c574E296e5553F7C59f01e122Abc0340f0D4E",
-        "10000000000000000",
-        "0x"
+        "0xEC6c574E296e5553F7C59f01e122Abc0340f0D4E", // to address
+        "10000000000000000", // value
+        "0x" // byte data
     );
 
     console.log(sendETHfromAccount);
