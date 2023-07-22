@@ -7,7 +7,7 @@
 const hre = require("hardhat");
 
 async function main() {
-    const lock = await hre.ethers.deployContract("NFT");
+    const lock = await hre.ethers.deployContract("UserID");
 
     await lock.waitForDeployment();
 

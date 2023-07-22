@@ -7,8 +7,11 @@ import "@openzeppelin/contracts/interfaces/IERC1271.sol";
 import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 import "@0xsequence/sstore2/contracts/utils/Bytecode.sol";
 import "interfaces/IERC6551Account.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 
-contract ERC6551Account is IERC165, IERC1271, IERC6551Account {
+contract ERC6551Account is IERC165, IERC1271, IERC6551Account, IERC721Receiver {
+    constructor() {}
+
     receive() external payable {}
 
     function executeCall(
@@ -72,4 +75,13 @@ contract ERC6551Account is IERC165, IERC1271, IERC6551Account {
     }
 
     function nonce() external view override returns (uint256) {}
+
+    function onERC721Received(
+        address,
+        address,
+        uint256,
+        bytes calldata
+    ) external pure returns (bytes4) {
+        return IERC721Receiver.onERC721Received.selector;
+    }
 }
